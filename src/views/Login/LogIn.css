@@ -1,0 +1,83 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.Logincontainer {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  margin: 0 auto;
+  overflow: hidden;
+}
+form {
+  background-color: #fff;
+  padding: 0px, 60px;
+  border-radius: 10px;
+}
+h1,
+h4 {
+  color: #000;
+  text-align: left;
+}
+.Loginbtn {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  border: none;
+  background-color: #216d5b;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: lighter;
+  font-size: 16px;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  display: inline-block;
+}
+.section1 {
+  justify-content: center;
+  margin-left: 60px;
+  width: 50%;
+}
+.section2 {
+  align-items: flex-end;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.section2 img {
+  width: 100%;
+  height: 100%;
+}
+
+.section2::after {
+  content: "";
+  position: absolute;
+  left: -6.1em;
+  top: 50%;
+  transform: translateY(-50%) rotate(5deg);
+  background: #fff;
+  width: 25%;
+  height: 140%;
+}
+.signUpLink {
+  color: #216d5b;
+  text-decoration: none;
+}
+p {
+  text-align: left;
+}
+
+.bottom__section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row-reverse;
+  /* margin-right: 20px; */
+}
