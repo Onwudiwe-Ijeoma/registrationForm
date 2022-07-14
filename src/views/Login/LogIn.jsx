@@ -1,20 +1,35 @@
 import { useState } from "react";
 import FormInput from "../../components/FormInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./LogIn.css";
+import axios from "axios";
+
+const baseUrl = "https://tut-tudo-node-api.herokuapp.com";
+
 
 const LogIn = () => {
+  let navigate = useNavigate();
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("values", values);
+    try {
+      const resp = await axios.post(`${baseUrl}/user/signin`, { ...values });
+      navigate("/DashBoard", {state: resp.data})
+      localStorage.setItem("userInfo", JSON.stringify(resp.data))
+
+      console.log(resp);
+    } catch (error) {
+      console.log(error.response);
+    }
   };
   const inputs = [
     {
       id: 1,
-      name: "email ",
+      name: "email",
       type: "email",
       placeholder: "Email",
       label: " Enter your email",
@@ -24,7 +39,7 @@ const LogIn = () => {
 
     {
       id: 2,
-      name: "password ",
+      name: "password",
       type: "password",
       placeholder: "password",
       label: "Password",

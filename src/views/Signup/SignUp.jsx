@@ -1,67 +1,84 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormInput from "../../components/FormInput";
 import "./SignUp.css";
+import axios from "axios";
+
+const baseUrl = "https://tut-tudo-node-api.herokuapp.com";
 
 const SignUp = () => {
+let navigate = useNavigate(); //used to navigateto the dashboard page
+
   const [values, setValues] = useState({
-    firstname: "",
-    lastname: "",
+    first_name: "",
+    last_name: "",
     email: "",
-    phonenumber: "",
-    birthday: "",
+    phone: "",
+    dob: "",
+    gender:"",
     password: "",
-    confirmPassword: "",
   });
 
   //inputs array
   const inputs = [
     {
       id: 1,
-      name: "firstname",
+      name: "first_name",
       type: "text",
       placeholder: "Firstname*",
-      label: "Enter your first name",
-      required: true,
+       required: true,
     },
 
     {
       id: 2,
-      name: "lastname ",
+      name: "last_name",
       type: "text",
       placeholder: "Lastname*",
-      label: "Enter your last name",
       errorMessage: "Name cannot be blank ",
       required: true,
     },
     {
       id: 3,
-      name: "email ",
+      name: "email",
       type: "email",
       placeholder: "Email*",
-      label: " Enter your email",
       errorMessage: "Please enter a valid email",
       required: true,
     },
     {
       id: 4,
-      name: "birthday",
+      name: "phone",
+      type: "number",
+      placeholder: "Phone Number*",
+      errorMessage: "Please enter a valid number",
+      required: true,
+    },
+    {
+      id: 5,
+      name: "dob",
       type: "date",
       placeholder: "Date of birth",
-      label: "Enter your birth date",
+   
+    },
+    {
+      id: 6,
+      name: "gender",
+      type: "text",
+      placeholder: "Gender",
+   
     },
 
     {
-      id: 5,
-      name: "password ",
+      id: 7,
+      name: "password",
       type: "password",
       placeholder: "password",
       label: "Password",
       required: true,
     },
     {
-      id: 6,
-      name: "confirmPassword ",
+      id: 8,
+      name: "confirmPassword",
       type: "password",
       placeholder: "Confirm Password",
       errorMessage: "Password does not match",
@@ -70,12 +87,26 @@ const SignUp = () => {
     },
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("values", values);
+    try {
+      const resp = await axios.post(`${baseUrl}/user/signup`, { ...values });
+      navigate("/DashBoard", {state: resp.data})
+      localStorage.setItem("userInfo", JSON.stringify(resp))
+      console.log(resp);
+    } catch (error) {
+      console.log(error.response);
+    }
   };
   //updating the value and getting input values
   const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log("target name", e.target);
+    const tempValue = { ...values };
+    tempValue[e.target.name] = e.target.value;
+    if (e.target.name !== "confirmPassword") {
+      setValues({ ...tempValue });
+    }
   };
 
   return (
